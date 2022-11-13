@@ -80,7 +80,7 @@ energy.sort()
 #
 for key in nuclei:
     vector = []
-    vector = [i * 60 / 1000 for i in nuclei[key]]
+    vector = [i / 60 for i in nuclei[key]]
     nuclei[key] = vector
 
 i = 0  # Counter for figure styles
@@ -101,10 +101,10 @@ m = -1  # Counter for mass figure
 for mass in masses:
     m += 1
     ax = axes[int(m / 2), m % 2]
-    textpos = (110, 19) if m % 2 == 0 else (155, 19)
+    textpos = (110, 5.25) if m % 2 == 0 else (155, 5.25)
     legendpos = "upper right" if m % 2 == 0 else "upper left"
     ax.text(*textpos, "(" + letters[m] + ") A=" + str(mass))
-    ax.set_ylim(-1, 21)
+    ax.set_ylim(-0.25, 5.75)
 
     for name in nuclei:
 
@@ -136,6 +136,6 @@ for mass in masses:
     ax.legend(fontsize="small", loc=legendpos)
     ax.grid(True)
 
-fig.supylabel("Yield [Counts/(s pnA)]")
+fig.supylabel("Yield [10$^{-3}$ Counts/(s pnA)]")
 fig.text(0.35, 0.07, "Recoil Exit Energy [MeV]", fontsize=18)
 plt.savefig("Bi_Yields.pdf", transparent=True, bbox_inches="tight")
