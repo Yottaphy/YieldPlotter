@@ -2,6 +2,11 @@ import numpy as np
 from matplotlib import pyplot as plt
 import math
 
+plt.rcParams.update({"font.size": 26})
+plt.rcParams.update({"legend.title_fontsize": 18})
+plt.rcParams.update({"font.family": "Latin Modern Roman"})
+plt.rcParams.update({"mathtext.fontset": "cm"})
+
 letters = "abcdefghijklmn"
 markers = ["o", "v", "^", "s", "d"]
 colz = [
@@ -41,7 +46,7 @@ green = {54: 180}
     Fr214m,
     Fr214,
     Ra215,
-) = np.genfromtxt("yellow_yields.csv", delimiter=",", unpack=True, skip_footer=1)
+) = np.genfromtxt("yellow_yields_sort.csv", delimiter=",", unpack=True, skip_footer=0)
 
 # combine the data for Ra213
 Ra213 = []
@@ -72,10 +77,12 @@ nuclei = {
 }
 
 # Make an energies vector and sort it in order for the plots.
+"""
 energy = []
 for i in case:
     energy.append(yellow[int(i)])
 energy.sort()
+"""
 
 #
 for key in nuclei:
@@ -86,12 +93,11 @@ for key in nuclei:
 i = 0  # Counter for figure styles
 
 # Define the figure with enough axes
-plt.rcParams.update({"font.size": 16})
 masses = [211, 212, 213, 214, 215]
 fig, axes = plt.subplots(
     math.ceil(len(masses) / 2),
     2,
-    figsize=(9, 16),
+    figsize=(14, 24),
     sharex=True,
     sharey=True,
     gridspec_kw={"hspace": 0, "wspace": 0},
@@ -101,10 +107,10 @@ m = -1  # Counter for mass figure
 for mass in masses:
     m += 1
     ax = axes[int(m / 2), m % 2]
-    textpos = (110, 5.25) if m % 2 == 0 else (155, 5.25)
-    legendpos = "upper right" if m % 2 == 0 else "upper left"
-    ax.text(*textpos, "(" + letters[m] + ") A=" + str(mass))
-    ax.set_ylim(-0.25, 5.75)
+    textpos = (110, 5.25) if m % 2 != 0 else (155, 5.25)
+    legendpos = "upper left"
+    legendtitle = "(" + letters[m] + ") A=" + str(mass)
+    ax.set_ylim(-0.25, 6.25)
 
     for name in nuclei:
 
@@ -122,7 +128,7 @@ for mass in masses:
             colour = colz[i]
 
         ax.plot(
-            energy,
+            case,
             nuclei[name],
             marker=markers[i % 5],
             linestyle=line,
@@ -133,9 +139,9 @@ for mass in masses:
 
         i += 1
     i = 0
-    ax.legend(fontsize="small", loc=legendpos)
+    ax.legend(title=legendtitle, fontsize="x-small", loc=legendpos, ncol=3)
     ax.grid(True)
 
 fig.supylabel("Yield [10$^{-3}$ Counts/(s pnA)]")
-fig.text(0.35, 0.07, "Recoil Exit Energy [MeV]", fontsize=18)
-plt.savefig("Bi_Yields.pdf", transparent=True, bbox_inches="tight")
+fig.text(0.35, 0.07, "Recoil Exit Energy [MeV]", fontsize=28)
+plt.savefig("Bi_Yields_with165.pdf", transparent=True, bbox_inches="tight")
