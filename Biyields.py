@@ -110,7 +110,7 @@ for mass in masses:
     textpos = (110, 5.25) if m % 2 != 0 else (155, 5.25)
     legendpos = "upper left"
     legendtitle = "(" + letters[m] + ") A=" + str(mass)
-    ax.set_ylim(-0.25, 6.25)
+    ax.set_ylim(-0.25, 5.75)
 
     for name in nuclei:
 
@@ -131,7 +131,9 @@ for mass in masses:
             case,
             nuclei[name],
             marker=markers[i % 5],
+            markersize=8,
             linestyle=line,
+            linewidth=2.5,
             color=colz[i],
             label=name,
             markerfacecolor=colour,
@@ -139,9 +141,9 @@ for mass in masses:
 
         i += 1
     i = 0
-    ax.legend(title=legendtitle, fontsize="x-small", loc=legendpos, ncol=3)
+    ax.legend(fontsize="x-small", loc=legendpos, ncol=3)  # title=legendtitle )
     ax.grid(True)
 
 fig.supylabel("Yield [10$^{-3}$ Counts/(s pnA)]")
 fig.text(0.35, 0.07, "Recoil Exit Energy [MeV]", fontsize=28)
-plt.savefig("Bi_Yields_with165.pdf", transparent=True, bbox_inches="tight")
+plt.savefig("Bi_Yields.pdf", transparent=True, bbox_inches="tight")
