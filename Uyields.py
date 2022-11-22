@@ -29,6 +29,7 @@ colz = [
 (
     energy,
     Th219,
+    Fr220,
     Ra220,
     Ac220,
     Rn221,
@@ -51,6 +52,7 @@ colz = [
 # dictionary to give each vector a string name
 nuclei = {
     "$^{219}$Th": Th219,
+    "$^{220}$Fr": Fr220,
     "$^{220}$Ra": Ra220,
     "$^{220}$Ac": Ac220,
     "$^{221}$Rn": Rn221,
