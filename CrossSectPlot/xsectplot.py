@@ -28,8 +28,10 @@ JRerr = [0.2, 0.1, 0.2, 0.2, 0.2, 0.1, 0.1, 0.2, 0.3, 0.3, 0.3, 0.2, 0.3]
 UJnum = [1, 2, 4, 5, 6, 7]
 UJ = [2.9, 1.2, 3.4, 1.7, 0.3, 0.5]
 
-plt.plot(UJnum, UJ, "s", color="black", label="RITU [1]")
-plt.errorbar(
+fig, ax = plt.subplots()
+
+ax.plot(UJnum, UJ, "s", color="black", label="RITU [1]")
+ax.errorbar(
     JRnum,
     JR,
     yerr=JRerr,
@@ -40,13 +42,14 @@ plt.errorbar(
     color=lebOrange,
     label="MARA [2]",
 )
-plt.grid()
-plt.legend(fontsize="small", title="Data taken at")
-plt.xticks(JRnum, minor=False, labels=nuclei, rotation=60)
+ax.grid()
+ax.legend(fontsize="small", title="Data taken at")
+ax.set_xticks(JRnum, minor=False, labels=nuclei, rotation=60)
+ax.xaxis.set_tick_params(which="minor", length=0, color="r")
 
-plt.ylabel("Cross Section [µb]")
-plt.ylim(0, 4)
-plt.xlim(0, len(JRnum) + 1)
-plt.vlines(7.5, ymin=0, ymax=5, linestyle="-", color="black", linewidth=0.5)
+ax.set_ylabel("Cross Section [µb]")
+ax.set_ylim(0, 4)
+ax.set_xlim(0, len(JRnum) + 1)
+ax.vlines(7.5, ymin=0, ymax=5, linestyle="-", color="black", linewidth=0.5)
 
-plt.savefig("xsect-compare.pdf", transparent=True, bbox_inches="tight")
+fig.savefig("xsect-compare.pdf", transparent=True, bbox_inches="tight")
