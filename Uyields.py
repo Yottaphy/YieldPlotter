@@ -8,7 +8,8 @@ plt.rcParams.update({"font.family": "Latin Modern Roman"})
 plt.rcParams.update({"mathtext.fontset": "cm"})
 
 letters = "abcdefghijklmn"
-markers = ["o", "v", "^", "s", "d"]
+elements = ["Th", "Fr", "Ra", "Ac", "Pa", "Rn"]
+markers = ["o", "v", "^", "s", "d", "*"]
 colz = [
     "#377eb8",
     "#ff7f00",
@@ -105,13 +106,18 @@ for mass in masses:
     textpos = (110, 5.25) if m % 2 != 0 else (155, 5.25)
     legendpos = "upper left"
     legendtitle = "(" + letters[m] + ") A=" + str(mass)
-    ax.set_ylim(-0.1, 1.24)
+    ax.set_ylim(-0.03, 1.24)
 
     for name in nuclei:
 
         # Only take the nuclei with the selected mass number
         if str(mass) not in name:
             continue
+
+        for i in range(len(elements)):
+            if elements[i] in name:
+                element_marker = markers[i]
+                element_colour = colz[i]
 
         # Use the same style for isomers than for g.s.
         if "m" in name:
@@ -120,22 +126,20 @@ for mass in masses:
             colour = "white"
         else:
             line = "-"
-            colour = colz[i]
+            colour = element_colour
 
         ax.plot(
             energy,
             nuclei[name],
-            marker=markers[i % 5],
+            marker=element_marker,
             markersize=8,
             linestyle=line,
             linewidth=2.5,
-            color=colz[i],
+            color=element_colour,
             label=name,
             markerfacecolor=colour,
         )
 
-        i += 1
-    i = 0
     ax.legend(fontsize="x-small", loc=legendpos, ncol=3)  # title=legendtitle )
     ax.grid(True)
 
