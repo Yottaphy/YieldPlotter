@@ -49,4 +49,4 @@ plt.ylim(0, 4)
 plt.xlim(0, len(JRnum) + 1)
 plt.vlines(7.5, ymin=0, ymax=5, linestyle="-", color="black", linewidth=0.5)
 
-plt.savefig("xsect-compare.pdf")
+plt.savefig("xsect-compare.pdf", transparent=True, bbox_inches="tight")
