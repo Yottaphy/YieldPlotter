@@ -1,11 +1,12 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import math
+import scienceplots
+
+plt.style.use("science")
 
 plt.rcParams.update({"font.size": 26})
 plt.rcParams.update({"legend.title_fontsize": 18})
-plt.rcParams.update({"font.family": "Latin Modern Roman"})
-plt.rcParams.update({"mathtext.fontset": "cm"})
 
 letters = "abcdefghijklmn"
 markers = ["o", "v", "^", "s", "d"]
@@ -104,16 +105,24 @@ fig, axes = plt.subplots(
 )
 m = -1  # Counter for mass figure
 
+el_colour = {
+    "Bi": "C6",
+    "Po": "C1",
+    "At": "C2",
+    "Rn": "C3",
+    "Fr": "C4",
+    "Ra": "C0",
+}
+el_marker = {"Bi": "x", "Po": "o", "At": "v", "Rn": "^", "Fr": "s", "Ra": "d"}
+
 for mass in masses:
     m += 1
     ax = axes[int(m / 2), m % 2]
     textpos = (110, 5.25) if m % 2 != 0 else (155, 5.25)
-    legendpos = "upper left"
     legendtitle = "(" + letters[m] + ") A=" + str(mass)
-    ax.set_ylim(-0.25, 5.75)
+    ax.set_ylim(-0.25, 5.99)
 
     for name in nuclei:
-
         # Only take the nuclei with the selected mass number
         if str(mass) not in name:
             continue
@@ -125,24 +134,26 @@ for mass in masses:
             colour = "white"
         else:
             line = "-"
-            colour = colz[i]
+            colour = el_colour[name[-2:]]
 
         ax.plot(
             case,
             nuclei[name],
-            marker=markers[i % 5],
+            marker=el_marker[name[-2:]],
             markersize=8,
             linestyle=line,
             linewidth=2.5,
-            color=colz[i],
+            color=el_colour[name[-2:]],
             label=name,
             markerfacecolor=colour,
         )
 
         i += 1
     i = 0
-    ax.legend(fontsize="x-small", loc=legendpos, ncol=3)  # title=legendtitle )
     ax.grid(True)
+    legendpos = "upper right"
+    ax.legend(fontsize="x-small", loc=legendpos, ncol=2)
+    ax.text(110, 5.4, legendtitle)
 
 fig.supylabel("Yield [10$^{-3}$ Counts/(s pnA)]")
 fig.text(0.35, 0.07, "Recoil Exit Energy [MeV]", fontsize=28)

@@ -1,25 +1,24 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import math
+import scienceplots
+
+plt.style.use("science")
 
 plt.rcParams.update({"font.size": 26})
 plt.rcParams.update({"legend.title_fontsize": 18})
-plt.rcParams.update({"font.family": "Latin Modern Roman"})
-plt.rcParams.update({"mathtext.fontset": "cm"})
 
 letters = "abcdefghijklmn"
 elements = ["Th", "Fr", "Ra", "Ac", "Pa", "Rn"]
-markers = ["o", "v", "^", "s", "d", "*"]
+markers = ["o", "v", "^", "s", "d", "x"]
 colz = [
-    "#377eb8",
-    "#ff7f00",
-    "#4daf4a",
-    "#f781bf",
-    "#a65628",
-    "#984ea3",
-    "#999999",
-    "#e41a1c",
-    "#dede00",
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C7",
 ]
 
 # dictionary with case as key and beam energy as values
@@ -104,12 +103,11 @@ for mass in masses:
     m += 1
     ax = axes[int(m / 2), m % 2]
     textpos = (110, 5.25) if m % 2 != 0 else (155, 5.25)
-    legendpos = "upper left"
+    legendpos = "upper right"
     legendtitle = "(" + letters[m] + ") A=" + str(mass)
     ax.set_ylim(-0.03, 1.24)
 
     for name in nuclei:
-
         # Only take the nuclei with the selected mass number
         if str(mass) not in name:
             continue
@@ -140,7 +138,8 @@ for mass in masses:
             markerfacecolor=colour,
         )
 
-    ax.legend(fontsize="x-small", loc=legendpos, ncol=3)  # title=legendtitle )
+    ax.legend(fontsize="x-small", loc=legendpos, ncol=2)
+    ax.text(150, 1.1, legendtitle)
     ax.grid(True)
 
 fig.supylabel("Yield [10$^{-3}$ Counts/(s pnA)]")
